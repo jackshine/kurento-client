@@ -17,11 +17,15 @@
 
 package fi.vtt.nubotest;
 
+import android.*;
+import android.Manifest;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,8 +62,8 @@ public class PeerVideoActivity extends Activity implements NBMWebRTCPeer.Observe
     private static final String TAG = "PeerVideoActivity";
 
     private NBMWebRTCPeer nbmWebRTCPeer;
-    private SurfaceViewRenderer masterView;
-    private SurfaceViewRenderer localView;
+    public static SurfaceViewRenderer masterView;
+    public static SurfaceViewRenderer localView;
 
     private Map<Integer, String> videoRequestUserMapping;
     private int publishVideoRequestId;
@@ -127,7 +131,7 @@ public class PeerVideoActivity extends Activity implements NBMWebRTCPeer.Observe
 
     @Override
     protected void onPause() {
-        nbmWebRTCPeer.stopLocalMedia();
+//        nbmWebRTCPeer.stopLocalMedia();
         super.onPause();
     }
 

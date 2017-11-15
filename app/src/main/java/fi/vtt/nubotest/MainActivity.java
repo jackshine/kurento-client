@@ -47,6 +47,10 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.webrtc.EglBase;
+import org.webrtc.RendererCommon;
+import org.webrtc.SurfaceViewRenderer;
+
 import fi.vtt.nubomedia.kurentoroomclientandroid.KurentoRoomAPI;
 import fi.vtt.nubomedia.kurentoroomclientandroid.RoomError;
 import fi.vtt.nubomedia.kurentoroomclientandroid.RoomListener;
@@ -64,6 +68,7 @@ public class MainActivity extends Activity implements RoomListener {
     private EditText mTextMessageET;
     private TextView mUsernameTV, mTextMessageTV;
     private String wsUri;
+    public static SurfaceViewRenderer tmpView;
     public static Map<String, Boolean> userPublishList = new HashMap<>();
     Handler mHandler;
 
@@ -77,6 +82,10 @@ public class MainActivity extends Activity implements RoomListener {
         this.mTextMessageTV = (TextView) findViewById(R.id.message_textview);
         this.mTextMessageET = (EditText) findViewById(R.id.main_text_message);
         this.mTextMessageTV.setText("");
+        tmpView = (SurfaceViewRenderer) findViewById(R.id.gl_surface_local);
+        EglBase rootEglBase = EglBase.create();
+        tmpView.init(rootEglBase.getEglBaseContext(), null);
+        tmpView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
         executor = new LooperExecutor();
         executor.requestStart();
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -200,9 +209,13 @@ public class MainActivity extends Activity implements RoomListener {
      * @param view button that is clicked to trigger toVideo
      */
     public void makeCall(View view){
-        Intent intent = new Intent(MainActivity.this, PeerVideoActivity.class);
-        intent.putExtra(Constants.USER_NAME, username);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, PeerVideoActivity.class);
+//        intent.putExtra(Constants.USER_NAME, username);
+//        startActivity(intent);
+        Intent intent2 = new Intent(MainActivity.this, PeerVideoService.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent2.putExtra(Constants.USER_NAME, username);
+        startService(intent2);
     }
 
     public void showToast(String string) {
