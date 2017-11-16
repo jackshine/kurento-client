@@ -17,15 +17,10 @@
 
 package fi.vtt.nubotest;
 
-import android.*;
-import android.Manifest;
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -79,6 +74,11 @@ public class PeerVideoActivity extends Activity implements NBMWebRTCPeer.Observe
         IDLE, PUBLISHING, PUBLISHED, WAITING_REMOTE_USER, RECEIVING_REMOTE_USER
     }
 
+    public static NBMMediaConfiguration.NBMVideoCodec CODEC = NBMMediaConfiguration.NBMVideoCodec.VP8;
+    public static int WIDTH = 352;
+    public static int HEIGHT = 288;
+    public static int FPS = 20;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,8 +109,8 @@ public class PeerVideoActivity extends Activity implements NBMWebRTCPeer.Observe
         NBMMediaConfiguration peerConnectionParameters = new NBMMediaConfiguration(
                 NBMMediaConfiguration.NBMRendererType.OPENGLES,
                 NBMMediaConfiguration.NBMAudioCodec.OPUS, 0,
-                NBMMediaConfiguration.NBMVideoCodec.VP8, 0,
-                new NBMMediaConfiguration.NBMVideoFormat(352, 288, PixelFormat.RGB_888, 20),
+                CODEC, 0,
+                new NBMMediaConfiguration.NBMVideoFormat(WIDTH, HEIGHT, PixelFormat.RGB_888, FPS),
                 NBMMediaConfiguration.NBMCameraPosition.FRONT);
 
         videoRequestUserMapping = new HashMap<>();

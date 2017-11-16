@@ -17,11 +17,14 @@
 
 package fi.vtt.nubotest;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,7 +32,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import fi.vtt.nubomedia.webrtcpeerandroid.NBMMediaConfiguration;
 import fi.vtt.nubotest.util.Constants;
 
 /**
@@ -72,6 +79,89 @@ public class LoginActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent intent = new Intent(context, PreferencesActivity.class);
             startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_encoder) {
+            Dialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Encoder")
+                .setItems(new String[]{"VP8", "VP9", "H264"}, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    PeerVideoActivity.CODEC = NBMMediaConfiguration.NBMVideoCodec.values()[which];
+                }
+            }).create();
+            dialog.show();
+            return true;
+        }
+
+        if (id == R.id.action_fps) {
+            RelativeLayout linearLayout = new RelativeLayout(this);
+            final NumberPicker aNumberPicker = new NumberPicker(this);
+            aNumberPicker.setMaxValue(60);
+            aNumberPicker.setMinValue(1);
+            aNumberPicker.setValue(PeerVideoActivity.FPS);
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+            RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+            linearLayout.setLayoutParams(params);
+            linearLayout.addView(aNumberPicker,numPicerParams);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("FPS");
+            alertDialogBuilder.setView(linearLayout);
+            alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int id) {
+                            PeerVideoActivity.FPS = aNumberPicker.getValue();
+
+                        }
+                    })
+                .setNegativeButton("Cancel",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            return true;
+        }
+
+        if (id == R.id.action_resolution) {
+            Dialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Resolution")
+                .setItems(new String[]{"360p", "480p", "720p", "1080p"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                      switch (which) {
+                          case 0:
+                            PeerVideoActivity.HEIGHT = 640;
+                            PeerVideoActivity.WIDTH = 360;
+                              break;
+                          case 1:
+                              PeerVideoActivity.HEIGHT = 854;
+                              PeerVideoActivity.WIDTH = 480;
+                              break;
+                          case 2:
+                              PeerVideoActivity.HEIGHT = 1280;
+                              PeerVideoActivity.WIDTH = 720;
+                              break;
+                          case 3:
+                              PeerVideoActivity.HEIGHT = 1920;
+                              PeerVideoActivity.WIDTH = 1080;
+                              break;
+                          default:
+                      }
+                    }
+                }).create();
+            dialog.show();
             return true;
         }
 

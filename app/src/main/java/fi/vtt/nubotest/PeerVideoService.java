@@ -80,8 +80,8 @@ public class PeerVideoService extends IntentService implements NBMWebRTCPeer.Obs
     NBMMediaConfiguration peerConnectionParameters = new NBMMediaConfiguration(
         NBMMediaConfiguration.NBMRendererType.OPENGLES,
         NBMMediaConfiguration.NBMAudioCodec.OPUS, 0,
-        NBMMediaConfiguration.NBMVideoCodec.VP8, 0,
-        new NBMMediaConfiguration.NBMVideoFormat(352, 288, PixelFormat.RGB_888, 20),
+        PeerVideoActivity.CODEC, 0,
+        new NBMMediaConfiguration.NBMVideoFormat(PeerVideoActivity.WIDTH, PeerVideoActivity.HEIGHT, PixelFormat.RGB_888, PeerVideoActivity.FPS),
         NBMMediaConfiguration.NBMCameraPosition.FRONT);
 
     videoRequestUserMapping = new HashMap<>();

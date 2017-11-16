@@ -18,6 +18,7 @@
 package fi.vtt.nubotest;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +33,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedInputStream;
@@ -57,6 +60,7 @@ import fi.vtt.nubomedia.kurentoroomclientandroid.RoomListener;
 import fi.vtt.nubomedia.kurentoroomclientandroid.RoomNotification;
 import fi.vtt.nubomedia.kurentoroomclientandroid.RoomResponse;
 import fi.vtt.nubomedia.utilitiesandroid.LooperExecutor;
+import fi.vtt.nubomedia.webrtcpeerandroid.NBMMediaConfiguration;
 import fi.vtt.nubotest.util.Constants;
 
 public class MainActivity extends Activity implements RoomListener {
@@ -150,38 +154,6 @@ public class MainActivity extends Activity implements RoomListener {
         executor.requestStop();
         super.onDestroy();
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, PreferencesActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_sign_out) {
-            kurentoRoomAPI.sendLeaveRoom(roomId);
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     private void joinRoom () {
         Constants.id++;
@@ -333,6 +305,8 @@ public class MainActivity extends Activity implements RoomListener {
             });
         }
     }
+
+
 
     @Override
     public void onRoomDisconnected() {

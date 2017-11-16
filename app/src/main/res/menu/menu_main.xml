@@ -1,8 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="fi.vtt.nubotest.MainActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" />
-    <item android:id="@+id/action_sign_out" android:title="@string/action_leave_room"
-        android:orderInCategory="1" />
+      xmlns:tools="http://schemas.android.com/tools" tools:context="fi.vtt.nubotest.MainActivity">
+    <item android:id="@+id/action_settings" android:orderInCategory="100"
+          android:title="@string/action_settings"/>
+    <item android:id="@+id/action_sign_out" android:orderInCategory="1"
+          android:title="@string/action_leave_room"/>
 
+    <item android:id="@+id/action_resolution" android:orderInCategory="200"
+          android:title="Resolution"/>
+    <item android:id="@+id/action_fps" android:orderInCategory="200" android:title="FPS"/>
+    <item android:id="@+id/action_encoder" android:orderInCategory="200" android:title="Encoder"/>
 </menu>
