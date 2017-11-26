@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +36,8 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import java.util.List;
 
 import fi.vtt.nubomedia.webrtcpeerandroid.NBMMediaConfiguration;
 import fi.vtt.nubotest.util.Constants;
@@ -135,30 +138,25 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_resolution) {
+            Camera camera = Camera.open(1);
+            Camera.Parameters parameters = camera.getParameters();
+            List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
+            String[] names = new String[sizeList.size()];
+            final int[] heights = new int[sizeList.size()];
+            final int[] widths = new int[sizeList.size()];
+            for (int i = 0; i < sizeList.size(); i++) {
+                Camera.Size size = sizeList.get(i);
+                heights[i] = size.height;
+                widths[i] = size.width;
+                names[i] = size.width + " x " + size.height;
+            }
             Dialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Resolution")
-                .setItems(new String[]{"360p", "480p", "720p", "1080p"}, new DialogInterface.OnClickListener() {
+                .setItems(names, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                      switch (which) {
-                          case 0:
-                            PeerVideoActivity.HEIGHT = 640;
-                            PeerVideoActivity.WIDTH = 360;
-                              break;
-                          case 1:
-                              PeerVideoActivity.HEIGHT = 854;
-                              PeerVideoActivity.WIDTH = 480;
-                              break;
-                          case 2:
-                              PeerVideoActivity.HEIGHT = 1280;
-                              PeerVideoActivity.WIDTH = 720;
-                              break;
-                          case 3:
-                              PeerVideoActivity.HEIGHT = 1920;
-                              PeerVideoActivity.WIDTH = 1080;
-                              break;
-                          default:
-                      }
+                    PeerVideoActivity.HEIGHT = heights[which];
+                    PeerVideoActivity.WIDTH = widths[which];
                     }
                 }).create();
             dialog.show();
