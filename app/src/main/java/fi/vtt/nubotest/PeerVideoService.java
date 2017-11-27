@@ -89,7 +89,7 @@ public class PeerVideoService extends IntentService implements NBMWebRTCPeer.Obs
     nbmWebRTCPeer = new NBMWebRTCPeer(peerConnectionParameters, this, new VideoRenderer.Callbacks() {
       @Override
       public void renderFrame(VideoRenderer.I420Frame i420Frame) {
-
+        VideoRenderer.renderFrameDone(i420Frame);
       }
     }, this);
     nbmWebRTCPeer.registerMasterRenderer(MainActivity.tmpView);
