@@ -26,9 +26,9 @@ dependencies {
     //compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'fi.vtt.nubomedia:webrtcpeer-android:1.1.0'
+//    compile 'fi.vtt.nubomedia:webrtcpeer-android:1.1.0'
     compile 'fi.vtt.nubomedia:kurento-room-client-android:1.1.1'
-    //compile 'io.pristine:libjingle:11139@aar'
+    compile 'io.pristine:libjingle:11139@aar'
     //compile 'fi.vtt.nubomedia:utilities-android:1.0.1'
     //compile('fi.vtt.nubomedia:jsonrpc-ws-android:1.0.6@aar') { transitive=true }
     //compile files('../../webrtcpeer-android/webrtcpeer-android/build/intermediates/bundles/debug/classes.jar')
