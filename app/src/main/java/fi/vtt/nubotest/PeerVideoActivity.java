@@ -75,9 +75,11 @@ public class PeerVideoActivity extends Activity implements NBMWebRTCPeer.Observe
     }
 
     public static NBMMediaConfiguration.NBMVideoCodec CODEC = NBMMediaConfiguration.NBMVideoCodec.VP8;
-    public static int WIDTH = 352;
-    public static int HEIGHT = 288;
-    public static int FPS = 20;
+//    public static int WIDTH = 352;
+    public static int WIDTH = 1920;
+//    public static int HEIGHT = 288;
+    public static int HEIGHT = 1080;
+    public static int FPS = 60;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

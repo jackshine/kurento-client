@@ -77,9 +77,6 @@ final class MediaResourceManager implements NBMWebRTCPeer.Observer {
     private static final String DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT = "DtlsSrtpKeyAgreement";
     private static final int HD_VIDEO_WIDTH = 1280;
     private static final int HD_VIDEO_HEIGHT = 720;
-    private static final int MAX_VIDEO_WIDTH = 1280;
-    private static final int MAX_VIDEO_HEIGHT = 1280;
-    private static final int MAX_VIDEO_FPS = 30;
     private static final int numberOfCameras = CameraEnumerationAndroid.getDeviceCount();
     private static final String MAX_VIDEO_WIDTH_CONSTRAINT = "maxWidth";
     private static final String MIN_VIDEO_WIDTH_CONSTRAINT = "minWidth";
@@ -159,8 +156,6 @@ final class MediaResourceManager implements NBMWebRTCPeer.Observer {
             }
             // Add video resolution constraints.
             if (videoWidth > 0 && videoHeight > 0) {
-                videoWidth = Math.min(videoWidth, MAX_VIDEO_WIDTH);
-                videoHeight = Math.min(videoHeight, MAX_VIDEO_HEIGHT);
                 videoConstraints.mandatory.add(new MediaConstraints.KeyValuePair(MIN_VIDEO_WIDTH_CONSTRAINT, Integer.toString(videoWidth)));
                 videoConstraints.mandatory.add(new MediaConstraints.KeyValuePair(MAX_VIDEO_WIDTH_CONSTRAINT, Integer.toString(videoWidth)));
                 videoConstraints.mandatory.add(new MediaConstraints.KeyValuePair(MIN_VIDEO_HEIGHT_CONSTRAINT, Integer.toString(videoHeight)));
@@ -169,11 +164,11 @@ final class MediaResourceManager implements NBMWebRTCPeer.Observer {
             // Add fps constraints.
             int videoFps = peerConnectionParameters.videoFps;
             if (videoFps > 0) {
-                videoFps = Math.min(videoFps, MAX_VIDEO_FPS);
                 videoConstraints.mandatory.add(new MediaConstraints.KeyValuePair(MIN_VIDEO_FPS_CONSTRAINT, Integer.toString(videoFps)));
                 videoConstraints.mandatory.add(new MediaConstraints.KeyValuePair(MAX_VIDEO_FPS_CONSTRAINT, Integer.toString(videoFps)));
             }
         }
+        Log.d("Johnson", "mandatory constrains: " + videoConstraints.mandatory);
         // Create audio constraints.
         audioConstraints = new MediaConstraints();
         // added for audio performance measurements

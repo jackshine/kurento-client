@@ -140,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
         if (id == R.id.action_resolution) {
             Camera camera = Camera.open(0);
             Camera.Parameters parameters = camera.getParameters();
+            camera.release();
             List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
             String[] names = new String[sizeList.size()];
             final int[] heights = new int[sizeList.size()];

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "fi.vtt.nubotest"
@@ -25,10 +25,12 @@ android {
 dependencies {
     //compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.4.0'
 //    compile 'fi.vtt.nubomedia:webrtcpeer-android:1.1.0'
     compile 'fi.vtt.nubomedia:kurento-room-client-android:1.1.2'
-    compile 'io.pristine:libjingle:11139@aar'
+    compile('io.pristine:libjingle:11139@aar') {transitive=true}
+//    compile 'org.webrtc:google-webrtc:1.0.20849@aar'
+//    compile 'io.pristine:libjingle_peerconnection:7113'
     //compile 'fi.vtt.nubomedia:utilities-android:1.0.1'
     //compile('fi.vtt.nubomedia:jsonrpc-ws-android:1.0.6@aar') { transitive=true }
     //compile files('../../webrtcpeer-android/webrtcpeer-android/build/intermediates/bundles/debug/classes.jar')
